@@ -159,6 +159,14 @@ class Program
             Returns true if the snake's X and Y positions are 
             within the bounds of the canvas and false if it's not
         */
-        return false;
+        if (snake.X == 0 | snake.X == WIDTH | snake.Y == 0 | snake.Y == HEIGHT)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
     }
 }
