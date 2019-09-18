@@ -16,6 +16,9 @@ public class Pickup{
 
             Call the SetPosition method.
         */
+        this.maxX = maxX;
+        this.maxY = maxY;
+        SetPosition();
     }
 
     public int X {
@@ -34,5 +37,7 @@ public class Pickup{
             between 0 and maxX, and y to a random value 
             between 0 maxY.
         */
+        x = r.Next(maxX);
+        y = r.Next(maxY);
     }
 }
