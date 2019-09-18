@@ -53,6 +53,7 @@ class Program
                 WriteLine();
                 break;
             }
+            
 
             /*  ------------------------------------------
                 4.1
@@ -64,7 +65,9 @@ class Program
                 This way we can store the previous position of the snake before
                 we update it
             */
-
+            int prevSnakeX = snake.X;
+            int prevSnakeY = snake.Y;
+            snake.Update();
             /*  ------------------------------------------
                 4.2
                 ------------------------------------------   
@@ -75,7 +78,7 @@ class Program
                 This will allow us to only make updates to the game
                 if the snake moved.
             */
-            if (true)
+            if (snake.X != prevSnakeX & snake.Y != prevSnakeY)
             {
 
                 /*  ------------------------------------------
@@ -92,7 +95,14 @@ class Program
                     -   Use the relevant method of the pickup to change 
                         its position.
                 */
-
+                if (snake.X == pickup.X & snake.Y == pickup.Y)
+                {
+                    score += 100;
+                    canvas.WriteMessageTop("Score: "+score);
+                    snake.Speed+=SPEED_INCREASE;
+                    snake.AddSegment();
+                    pickup.SetPosition();
+                }
                 /*  ------------------------------------------
                     4.4
                     ------------------------------------------   
@@ -106,7 +116,13 @@ class Program
                     -   Call the Beep method of the Console class.
                     -   Break out of the game loop.
                 */
-
+                if (snake.IsHeadTouchingBody()==true & IsSnakeInBounds()==false )
+                {
+                    canvas.WriteMessageBottom("Game Over :(");
+                    WriteLine();
+                    Beep();
+                    break;
+                }
                 //This method call will update the positions of all the snake segments.
                 snake.UpdateSegments();
 
@@ -124,6 +140,12 @@ class Program
                 */
 
                 //draw pickup
+                Clear();
+                foreach (SnakeSegment segment in snake.Segments)
+                {
+                    canvas.Draw(segment.X, segment.Y, segment.Character);
+                }
+
                 canvas.Draw(pickup.X, pickup.Y, '', ConsoleColor.Red);
             }
         }
