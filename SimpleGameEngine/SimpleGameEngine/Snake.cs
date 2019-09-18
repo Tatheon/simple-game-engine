@@ -24,7 +24,9 @@ public class Snake{
             Initialize the x, y and speed fields 
             using the values passed to the constructor
         */
-
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
         
         /*  Adds a segment to the segments List
             This segment will serve as the head of the snake. */
@@ -86,6 +88,8 @@ public class Snake{
             3. use the segments.Add method to add the newSegment to the back of
             the segments List.
         */
+        SnakeSegment lastSegment = segments[segments.Count];
+        segments.Add(new SnakeSegment(lastSegment.PrevX, lastSegment.PrevY, 'o'));
     }
 
     public void UpdateSegments(){
@@ -105,6 +109,13 @@ public class Snake{
             You can use the segments.Count property to loop through
             the List of snake segments.  
         */
+        segments[0].X = (int)x;
+        segments[0].Y = (int)y;
+        for(int i = 1; i < segments.Count; i++)
+        {
+            segments[i].X = segments[i - 1].PrevX;
+            segments[i].Y = segments[i - 1].PrevY;
+        }
     }
 
     public bool IsHeadTouchingBody(){
@@ -117,7 +128,15 @@ public class Snake{
 
             It should return false otherwise.
         */
-        return false;
+        bool isTouching = false;
+        for (int i = 1; i < segments.Count; i++)
+        {
+            if (segments[i].X == x & segments[i].Y == y )
+            {
+                isTouching = true;
+            }
+        }
+            return isTouching;
     }
 
     public void Update(){
@@ -128,6 +147,16 @@ public class Snake{
         else if(Input.KeyPressed == InputType.DOWN){
             yDir = 1;
             xDir = 0;
+        }
+        else if (Input.KeyPressed == InputType.LEFT)
+        {
+            yDir = 0;
+            xDir = -1;
+        }
+        else if (Input.KeyPressed == InputType.RIGHT)
+        {
+            yDir = 0;
+            xDir = 1;
         }
         /*  ------------------------------------------
             2.5
@@ -159,5 +188,7 @@ public class Snake{
             REMEMBER: you can use the static Time class to access the 
             DeltaTime property.
         */
+        x = xDir * speed * Time.DeltaTime;
+        y = yDir * speed * Time.DeltaTime;
     }
 }
