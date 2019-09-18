@@ -88,7 +88,7 @@ public class Snake{
             3. use the segments.Add method to add the newSegment to the back of
             the segments List.
         */
-        SnakeSegment lastSegment = segments[segments.Count];
+        SnakeSegment lastSegment = segments[segments.Count-1];
         segments.Add(new SnakeSegment(lastSegment.PrevX, lastSegment.PrevY, 'o'));
     }
 
